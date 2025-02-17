@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import Image from "next/image";
 import React from "react";
 
@@ -19,6 +20,7 @@ export default async function MovieDetail({
   if (movie.status_code === 34) {
     return <h1 className="text-center">Movie not found</h1>;
   }
+
   return (
     <>
       <div className="flex flex-col md:flex-row items-center md:items-start p-4 md:p-8">
@@ -41,13 +43,11 @@ export default async function MovieDetail({
             <li className="mb-2">
               <strong>Runtime:</strong> {movie.runtime} minutes
             </li>
-            <li className="mb-2">
+            <li>
               <strong>Overview:</strong> {movie.overview}
             </li>
           </ul>
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors">
-            Add to Favorites
-          </button>
+          <Button movieId={movie.id} />
         </div>
       </div>
     </>
