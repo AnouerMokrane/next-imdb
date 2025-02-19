@@ -1,3 +1,5 @@
+"use server";
+
 import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "../mongodb";
 import User from "../models/User";
