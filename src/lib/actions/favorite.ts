@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "../mongodb";
 import User from "../models/User";
 
-export const addToFav = async (FormData: FormData): Promise<any> => {
+export const addToFav = async (FormData: FormData) => {
   try {
     const movieId = FormData.get("movieId");
     const { userId } = await auth();
