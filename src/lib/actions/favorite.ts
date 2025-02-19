@@ -4,14 +4,9 @@ import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "../mongodb";
 import User from "../models/User";
 
-interface AddToFavResponse {
-  error?: string;
-  message?: string;
-  favorites?: number[];
-}
-
-export const addToFav = async (movieId: number): Promise<AddToFavResponse> => {
+export const addToFav = async (FormData: FormData): Promise<any> => {
   try {
+    const movieId = FormData.get("movieId");
     const { userId } = await auth();
 
     if (!userId) {

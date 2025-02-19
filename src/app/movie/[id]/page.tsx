@@ -1,4 +1,6 @@
 import Button from "@/components/Button";
+import { addToFav } from "@/lib/actions/favorite";
+import Form from "next/form";
 import Image from "next/image";
 import React from "react";
 
@@ -47,7 +49,9 @@ export default async function MovieDetail({
               <strong>Overview:</strong> {movie.overview}
             </li>
           </ul>
-          <Button movieId={movie.id} />
+          <Form action={addToFav}>
+            <Button movieId={movie.id} />
+          </Form>
         </div>
       </div>
     </>
