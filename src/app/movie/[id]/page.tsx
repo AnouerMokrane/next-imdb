@@ -1,6 +1,4 @@
 import Button from "@/components/Button";
-import { addToFav } from "@/lib/actions/favorite";
-import Form from "next/form";
 import Image from "next/image";
 import React from "react";
 
@@ -22,7 +20,6 @@ export default async function MovieDetail({
   if (movie.status_code === 34) {
     return <h1 className="text-center">Movie not found</h1>;
   }
-  const actionWithId = addToFav.bind(null, movie.id);
 
   return (
     <>
@@ -50,9 +47,8 @@ export default async function MovieDetail({
               <strong>Overview:</strong> {movie.overview}
             </li>
           </ul>
-          <Form action={actionWithId}>
-            <Button />
-          </Form>
+
+          <Button movieId={movie.id} />
         </div>
       </div>
     </>

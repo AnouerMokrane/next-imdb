@@ -6,6 +6,8 @@ import ThemeProviderPage from "@/components/ThemeProvider";
 import NavigationBar from "@/components/NavigationBar";
 import { ClerkProvider } from "@clerk/nextjs";
 import Search from "@/components/Search";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -36,6 +38,7 @@ export default function RootLayout({
               {children}
             </div>
           </ThemeProviderPage>
+          <ToastContainer />
         </body>
       </html>
     </ClerkProvider>
