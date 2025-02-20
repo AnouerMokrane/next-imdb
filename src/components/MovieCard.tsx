@@ -25,9 +25,7 @@ export default function MovieCard({ movie }: Props) {
         className="w-full max-h-56 object-cover transition-transform duration-300 ease-in-out transform hover:scale-105"
         height={300}
         width={580}
-        src={`https://image.tmdb.org/t/p/w200${
-          movie.backdrop_path || movie.poster_path
-        }`}
+        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
         alt={movie.title}
       />
       <div className="px-6 py-4">

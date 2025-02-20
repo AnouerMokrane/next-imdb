@@ -1,17 +1,19 @@
 import Link from "next/link";
 import ToggleDarkMode from "./ToggleDarkMode";
-import { SignedIn, SignedOut, UserButton, SignOutButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
     <header className="bg-white dark:bg-gray-800 shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="flex items-center">
-          <span className="ml-2 text-2xl font-bold bg-amber-500 p-2 rounded-md text-gray-900 dark:text-white">
-            IMDb
-          </span>
-          <span className="text-xl px-2 font-semibold">Clone</span>
-        </Link>
+        <div className="flex items-center gap-6">
+          <Link href="/">
+            <span className="ml-2 text-2xl font-bold bg-amber-500 p-2 rounded-md text-gray-900 dark:text-white">
+              IMDb
+            </span>
+          </Link>
+          <Link href={"/favorites"}>Favorites</Link>
+        </div>
         <div className="flex items-center space-x-4">
           {/* dark mode button */}
           <ToggleDarkMode />
@@ -25,7 +27,6 @@ export default function Header() {
           </SignedOut>
           <SignedIn>
             <UserButton />
-            <SignOutButton />
           </SignedIn>
         </div>
       </div>
