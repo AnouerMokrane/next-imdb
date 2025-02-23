@@ -37,7 +37,7 @@ export default function Button({ movie }: { movie: Movie }) {
     const fetchFavs = async () => {
       try {
         const result = await getFavorites();
-        setFav(result.favorites);
+        setFav(result.favorites.map((movie) => movie.id.toString()));
       } catch {
         toast.error("Failed to fetch favorites");
       } finally {

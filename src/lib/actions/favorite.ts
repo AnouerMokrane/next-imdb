@@ -28,12 +28,7 @@ export const addToFav = async (movie: Movie) => {
   return { error: "An error occurred while adding to favorites" };
 };
 
-export async function getFavorites(): Promise<{
-  map(
-    arg0: (movie: Movie) => import("react").JSX.Element
-  ): import("react").ReactNode;
-  favorites: Movie[];
-}> {
+export async function getFavorites(): Promise<{ favorites: Movie[] }> {
   await connectDB();
   const { userId } = await auth();
   if (!userId) return { favorites: [] as Movie[] };
