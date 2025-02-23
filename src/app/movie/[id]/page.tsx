@@ -1,5 +1,4 @@
 import Button from "@/components/Button";
-import { getFavorites } from "@/lib/actions/favorite";
 import Image from "next/image";
 import React from "react";
 
@@ -21,11 +20,6 @@ export default async function MovieDetail({
   if (movie.status_code === 34) {
     return <h1 className="text-center">Movie not found</h1>;
   }
-
-  const result = await getFavorites();
-
-  console.log(result);
-
   return (
     <>
       <div className="flex flex-col md:flex-row items-center md:items-start p-4 md:p-8">

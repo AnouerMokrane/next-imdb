@@ -1,39 +1,73 @@
 "use client";
 
-import { addToFav } from "@/lib/actions/favorite";
-import { useTransition } from "react";
+import { addToFav, getFavorites, removeFromFav } from "@/lib/actions/favorite";
+import { useUser } from "@clerk/nextjs";
+import { useEffect, useState, useTransition } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 
 export default function Button({ movieId }: { movieId: number }) {
   const [isPending, startTransition] = useTransition();
+  const [Fav, setFav] = useState<number[]>([]);
+  const [isFavLoading, setIsFavLoading] = useState(true);
+  const { user } = useUser();
+
+  const isFav = Fav.includes(movieId);
 
   const handleAddToFav = async () => {
     startTransition(async () => {
-      const result = await addToFav(movieId);
+      if (isFav) {
+        await removeFromFav(movieId);
+        setFav((prevFav) => prevFav.filter((id) => id !== movieId));
+      } else {
+        const result = await addToFav(movieId);
 
-      if (result.error) {
-        toast.error(result.error);
-      } else if (result.message) {
-        toast.success(result.message);
+        if (result.error) {
+          toast.error(result.error);
+        } else if (result.message) {
+          toast.success(result.message);
+          setFav((prevFav) => [...prevFav, movieId]);
+        }
       }
     });
   };
 
+  useEffect(() => {
+    const fetchFavs = async () => {
+      try {
+        const result = await getFavorites();
+        setFav(result?.favorites || []);
+      } catch {
+        toast.error("Failed to fetch favorites");
+      } finally {
+        setIsFavLoading(false);
+      }
+    };
+    fetchFavs();
+  }, []);
+
+  if (!user) return null;
+
   return (
     <>
-      <button
-        type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors"
-        disabled={isPending}
-        onClick={handleAddToFav}
-      >
-        {isPending ? (
-          <AiOutlineLoading3Quarters className=" animate-spin" />
-        ) : (
-          "Add to Favorites"
-        )}
-      </button>
+      {!isFavLoading ? (
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors"
+          disabled={isPending}
+          onClick={handleAddToFav}
+        >
+          {isPending ? (
+            <AiOutlineLoading3Quarters className="animate-spin" />
+          ) : isFav ? (
+            "Remove from favorites"
+          ) : (
+            "Add to Favorites"
+          )}
+        </button>
+      ) : (
+        "loading"
+      )}
     </>
   );
 }
