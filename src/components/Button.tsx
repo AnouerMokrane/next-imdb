@@ -8,17 +8,17 @@ import { toast } from "react-toastify";
 
 export default function Button({ movieId }: { movieId: number }) {
   const [isPending, startTransition] = useTransition();
-  const [Fav, setFav] = useState<number[]>([]);
+  const [Fav, setFav] = useState<string[]>([]);
   const [isFavLoading, setIsFavLoading] = useState(true);
   const { user } = useUser();
 
-  const isFav = Fav.includes(movieId);
+  const isFav = Fav.includes(movieId.toString());
 
   const handleAddToFav = async () => {
     startTransition(async () => {
       if (isFav) {
         await removeFromFav(movieId);
-        setFav((prevFav) => prevFav.filter((id) => id != movieId));
+        setFav((prevFav) => prevFav.filter((id) => id != movieId.toString()));
       } else {
         const result = await addToFav(movieId);
 
@@ -26,7 +26,7 @@ export default function Button({ movieId }: { movieId: number }) {
           toast.error(result.error);
         } else if (result.message) {
           toast.success(result.message);
-          setFav((prevFav) => [...prevFav, movieId]);
+          setFav((prevFav) => [...prevFav, movieId.toString()]);
         }
       }
     });
@@ -39,7 +39,7 @@ export default function Button({ movieId }: { movieId: number }) {
         console.log("Fetched favorites:", result);
         console.log("Fetched favorites:", Fav);
         //just for testing
-        setFav([245, 885, 1211472]);
+        setFav(result.favorites);
         console.log("Fetched favorites:", Fav);
       } catch {
         toast.error("Failed to fetch favorites");
@@ -54,6 +54,7 @@ export default function Button({ movieId }: { movieId: number }) {
 
   return (
     <>
+      <button>hello</button>
       {!isFavLoading ? (
         <button
           type="submit"
