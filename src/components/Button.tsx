@@ -48,7 +48,7 @@ export default function Button({ movieId }: { movieId: number }) {
       }
     };
     fetchFavs();
-  }, [Fav]);
+  }, []);
 
   if (!user) return null;
 
