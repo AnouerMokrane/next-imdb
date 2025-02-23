@@ -39,7 +39,7 @@ export default function Button({ movieId }: { movieId: number }) {
         console.log("Fetched favorites:", result);
         console.log("Fetched favorites:", Fav);
 
-        setFav(result?.favorites || []);
+        setFav([245, 885, 1211472]);
         console.log("Fetched favorites:", Fav);
       } catch {
         toast.error("Failed to fetch favorites");
@@ -48,7 +48,7 @@ export default function Button({ movieId }: { movieId: number }) {
       }
     };
     fetchFavs();
-  }, [Fav]);
+  }, []);
 
   if (!user) return null;
 
