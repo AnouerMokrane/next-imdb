@@ -5,28 +5,29 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useState, useTransition } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { Movie } from "./MovieCard";
 
-export default function Button({ movieId }: { movieId: number }) {
+export default function Button({ movie }: { movie: Movie }) {
   const [isPending, startTransition] = useTransition();
   const [Fav, setFav] = useState<string[]>([]);
   const [isFavLoading, setIsFavLoading] = useState(true);
   const { user } = useUser();
 
-  const isFav = Fav.includes(movieId.toString());
+  const isFav = Fav.includes(movie.id.toString());
 
   const handleAddToFav = async () => {
     startTransition(async () => {
       if (isFav) {
-        await removeFromFav(movieId);
-        setFav((prevFav) => prevFav.filter((id) => id != movieId.toString()));
+        await removeFromFav(movie.id);
+        setFav((prevFav) => prevFav.filter((id) => id != movie.id.toString()));
       } else {
-        const result = await addToFav(movieId);
+        const result = await addToFav(movie);
 
-        if (result.error) {
-          toast.error(result.error);
-        } else if (result.message) {
-          toast.success(result.message);
-          setFav((prevFav) => [...prevFav, movieId.toString()]);
+        if (result?.error) {
+          toast.error(result?.error);
+        } else if (result?.message) {
+          toast.success(result?.message);
+          setFav((prevFav) => [...prevFav, movie.id.toString()]);
         }
       }
     });

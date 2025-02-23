@@ -3,14 +3,13 @@
 import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "../mongodb";
 import User from "../models/User";
+import { Movie } from "@/components/MovieCard";
 
-export const addToFav = async (movieId: number) => {
+export const addToFav = async (movie: Movie) => {
   try {
     const { userId } = await auth();
 
-    if (!userId) {
-      return { error: "User not logged in" };
-    }
+    if (!userId) return;
 
     await connectDB();
 
@@ -20,11 +19,7 @@ export const addToFav = async (movieId: number) => {
       return { error: "User not found" };
     }
 
-    if (user.favorites.includes(movieId)) {
-      return { message: "Movie already in favorites" };
-    }
-
-    user.favorites.push(movieId);
+    user.favorites.push(movie);
     await user.save();
     return { message: "Movie added to favorites successfully" };
   } catch (error) {

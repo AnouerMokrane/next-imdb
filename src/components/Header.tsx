@@ -12,10 +12,11 @@ export default function Header() {
               IMDb
             </span>
           </Link>
-          <Link href={"/favorites"}>Favorites</Link>
+          <SignedIn>
+            <Link href={"/favorites"}>Favorites</Link>
+          </SignedIn>
         </div>
         <div className="flex items-center space-x-4">
-          {/* dark mode button */}
           <ToggleDarkMode />
           <SignedOut>
             <Link

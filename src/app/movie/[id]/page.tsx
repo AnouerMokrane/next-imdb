@@ -47,7 +47,7 @@ export default async function MovieDetail({
             </li>
           </ul>
 
-          <Button movieId={movie.id} />
+          <Button movie={movie} />
         </div>
       </div>
     </>
