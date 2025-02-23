@@ -5,13 +5,11 @@ const UserSchema = new mongoose.Schema({
   email: String,
   favorites: [
     {
-      id: { String, required: true },
-      title: String,
-      overview: String,
-      poster_path: String,
-      backdrop_path: String,
-      vote_average: Number,
-      release_date: String,
+      id: { type: Number, required: true },
+      title: { type: String, required: true },
+      poster_path: { type: String, required: true },
+      release_date: { type: String, required: true },
+      overview: { type: String, required: true },
     },
   ],
 });
