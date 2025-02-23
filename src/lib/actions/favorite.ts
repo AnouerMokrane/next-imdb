@@ -41,17 +41,20 @@ export const removeFromFav = async (movieId: number) => {
   try {
     const { userId } = await auth();
 
-    if (!userId) {
-      return { error: "User not logged in" };
-    }
-
     await connectDB();
 
-    await User.findOneAndUpdate(
-      { _id: userId },
-      { $pull: { favorites: movieId } }
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return { error: "User not found" };
+    }
+
+    user.favorites = user.favorites.filter(
+      (movie: Movie) => movie.id !== movieId
     );
+    await user.save();
   } catch (error) {
-    console.error("Error", error);
+    console.error("Error removing from favorites:", error);
   }
+  return { error: "An error occurred while removing from favorites" };
 };

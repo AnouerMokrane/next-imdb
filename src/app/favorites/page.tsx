@@ -7,7 +7,7 @@ export default async function page() {
   const data = await getFavorites();
   return (
     <>
-      <h1>Favorites</h1>
+      <h1 className="pb-6 text-lg">Favorites</h1>
       <GridWrapper>
         {data?.favorites.map((movie: Movie) => (
           <MovieCard key={movie.id} movie={movie} />
