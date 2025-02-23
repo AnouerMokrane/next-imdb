@@ -28,10 +28,15 @@ export const addToFav = async (movie: Movie) => {
   return { error: "An error occurred while adding to favorites" };
 };
 
-export async function getFavorites() {
+export async function getFavorites(): Promise<{
+  map(
+    arg0: (movie: Movie) => import("react").JSX.Element
+  ): import("react").ReactNode;
+  favorites: Movie[];
+}> {
   await connectDB();
   const { userId } = await auth();
-  if (!userId) return { favorites: [] };
+  if (!userId) return { favorites: [] as Movie[] };
 
   const user = await User.findOne({ _id: userId });
   return { favorites: user?.favorites || [] };
