@@ -8,17 +8,17 @@ import { toast } from "react-toastify";
 
 export default function Button({ movieId }: { movieId: number }) {
   const [isPending, startTransition] = useTransition();
-  const [Fav, setFav] = useState<string[]>([]);
+  const [Fav, setFav] = useState<number[]>([]);
   const [isFavLoading, setIsFavLoading] = useState(true);
   const { user } = useUser();
 
-  const isFav = Fav.includes(movieId.toString());
+  const isFav = Fav.includes(movieId);
 
   const handleAddToFav = async () => {
     startTransition(async () => {
       if (isFav) {
         await removeFromFav(movieId);
-        setFav((prevFav) => prevFav.filter((id) => id !== movieId));
+        setFav((prevFav) => prevFav.filter((id) => id != movieId));
       } else {
         const result = await addToFav(movieId);
 
