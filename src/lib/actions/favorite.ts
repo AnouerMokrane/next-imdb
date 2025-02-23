@@ -54,3 +54,22 @@ export const getFavorites = async () => {
     console.error("Error fetching favorites", error);
   }
 };
+
+export const removeFromFav = async (movieId: number) => {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { error: "User not logged in" };
+    }
+
+    await connectDB();
+
+    await User.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { favorites: movieId } }
+    );
+  } catch (error) {
+    console.error("Error", error);
+  }
+};
