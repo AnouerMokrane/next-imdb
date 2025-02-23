@@ -38,7 +38,7 @@ export default function Button({ movieId }: { movieId: number }) {
         const result = await getFavorites();
         console.log("Fetched favorites:", result);
         console.log("Fetched favorites:", Fav);
-
+        //just for testing
         setFav([245, 885, 1211472]);
         console.log("Fetched favorites:", Fav);
       } catch {
