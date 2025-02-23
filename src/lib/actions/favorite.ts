@@ -31,7 +31,7 @@ export const addToFav = async (movie: Movie) => {
 export async function getFavorites() {
   await connectDB();
   const { userId } = await auth();
-  if (!userId) return;
+  if (!userId) return null;
 
   const user = await User.findOne({ _id: userId });
   return { favorites: user?.favorites || [] };
