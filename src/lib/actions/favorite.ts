@@ -33,27 +33,14 @@ export const addToFav = async (movieId: number) => {
   return { error: "An error occurred while adding to favorites" };
 };
 
-export const getFavorites = async () => {
-  try {
-    const { userId } = await auth();
+export async function getFavorites() {
+  await connectDB();
+  const { userId } = await auth();
+  if (!userId) return { favorites: [] };
 
-    if (!userId) {
-      return { error: "User not logged in" };
-    }
-
-    await connectDB();
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return { error: "User not found" };
-    }
-
-    return { favorites: user.favorites };
-  } catch (error) {
-    console.error("Error fetching favorites", error);
-  }
-};
+  const user = await User.findOne({ _id: userId });
+  return { favorites: user?.favorites || [] };
+}
 
 export const removeFromFav = async (movieId: number) => {
   try {
