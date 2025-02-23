@@ -36,11 +36,7 @@ export default function Button({ movieId }: { movieId: number }) {
     const fetchFavs = async () => {
       try {
         const result = await getFavorites();
-        console.log("Fetched favorites:", result);
-        console.log("Fetched favorites:", Fav);
-        //just for testing
         setFav(result.favorites);
-        console.log("Fetched favorites:", Fav);
       } catch {
         toast.error("Failed to fetch favorites");
       } finally {
@@ -54,11 +50,14 @@ export default function Button({ movieId }: { movieId: number }) {
 
   return (
     <>
-      <button>hello</button>
       {!isFavLoading ? (
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors"
+          className={`px-4 py-2  text-white rounded-lg shadow  transition-colors ${
+            isFav
+              ? "bg-red-500 hover:bg-red-600"
+              : "bg-blue-500 hover:bg-blue-600"
+          }`}
           disabled={isPending}
           onClick={handleAddToFav}
         >
@@ -71,7 +70,7 @@ export default function Button({ movieId }: { movieId: number }) {
           )}
         </button>
       ) : (
-        "loading"
+        "loading..."
       )}
     </>
   );
