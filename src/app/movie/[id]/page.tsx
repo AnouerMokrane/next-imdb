@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { Movie } from "@/components/MovieCard";
 import { getFavorites } from "@/lib/actions/favorite";
 import Image from "next/image";
 import React from "react";
@@ -20,7 +21,7 @@ export default async function MovieDetail({
   const movie = await movieRes.json();
   const favoritesData = await getFavorites();
   const favorites =
-    favoritesData?.favorites.map((favorite: any) => favorite.id.toString()) ||
+    favoritesData?.favorites.map((favorite: Movie) => favorite.id.toString()) ||
     [];
 
   if (movie.status_code === 34) {
