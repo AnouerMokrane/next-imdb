@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { getFavorites } from "@/lib/actions/favorite";
 import Image from "next/image";
 import React from "react";
 
@@ -17,6 +18,11 @@ export default async function MovieDetail({
     }
   );
   const movie = await movieRes.json();
+  const favoritesData = await getFavorites();
+  const favorites =
+    favoritesData?.favorites.map((favorite: any) => favorite.id.toString()) ||
+    [];
+
   if (movie.status_code === 34) {
     return <h1 className="text-center">Movie not found</h1>;
   }
@@ -47,7 +53,7 @@ export default async function MovieDetail({
             </li>
           </ul>
 
-          <Button movie={movie} />
+          <Button movie={movie} favoritesIds={favorites} />
         </div>
       </div>
     </>
